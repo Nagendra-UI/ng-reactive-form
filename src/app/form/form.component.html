@@ -1,0 +1,129 @@
+<div class="container form">
+    <div class="row justify-content-center">
+
+        <h2>Reactive Sample Form Live Validation</h2>
+    </div>
+    <hr>
+    <form [formGroup]="formValues" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group"
+                    [ngClass]="{'error': onError(this.formValues.get('username')), 'success': onSuccess(this.formValues.get('username'))}">
+                    <label for="exampleInputName1">Username</label>
+                    <input type="text" class="form-control" aria-describedby="nameHelp" placeholder="Enter Username"
+                        formControlName="username" autocomplete="off">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="text-danger">
+                        <small *ngIf="this.formValues.get('username').errors?.required"> Enter a username </small>
+                        <small *ngIf="this.formValues.get('username').errors?.minlength">
+                            Username is minimum 3 characters </small>
+                        <small *ngIf="this.formValues.get('username').errors?.pattern">
+                            Username is only contain letters and numbers</small>
+                    </div>
+
+                </div>
+
+                <div class="form-group"
+                    [ngClass]="{'error': onError(this.formValues.get('email')), 'success': onSuccess(this.formValues.get('email'))}">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email"
+                        formControlName="email" autocomplete="off">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="text-danger">
+                        <small *ngIf="this.formValues.get('email').errors?.required"> Must provide email </small>
+                        <small *ngIf="this.formValues.get('email').errors?.email">
+                            Email is not valid </small>
+                    </div>
+                </div>
+
+                <div class="form-group"
+                    [ngClass]="{'error': onError(this.formValues.get('password')), 'success': onSuccess(this.formValues.get('password'))}">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="text-danger">
+                        <small *ngIf="this.formValues.get('password').errors?.required"> Enter a password </small>
+                        <small *ngIf="this.formValues.get('password').errors?.minlength">Use 6 characters or more for
+                            your password
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group"
+                    [ngClass]="{'error': onError(this.formValues.get('cnfPassword')), 'success': onSuccess(this.formValues.get('cnfPassword'))}">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input type="password" class="form-control" placeholder="Confirm Password"
+                        formControlName="cnfPassword">
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <div class="text-danger">
+                        <small *ngIf="this.formValues.get('cnfPassword').errors?.required"> Confirm your password
+                        </small>
+                        <small *ngIf="this.formValues.get('cnfPassword').errors?.passwordMismatch"> Those passwords
+                            didn’t match.
+                            Try again.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputskills1">Skills</label>
+                    <div class="col-md-8" formArrayName="skills">
+                        <div class="d-flex align-items-center justify-content-center mb-2"
+                            *ngFor="let skill of formValues.controls.skills['controls']; let i = index"
+                            [formGroupName]="i">
+                            <input type="text" class="form-control" id="exampleInputSkills1" placeholder="skill"
+                                formControlName="skill">
+                            <a href="#" (click)="removeSkill(i)" class="badge badge-danger remove">X</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline-info btn-sm" type="button" (click)="addSkill()">Add Skill</button>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleInputDate1">Date of Birth</label>
+                    <input type="text" class="form-control" placeholder="Date of Birth" formControlName="dob"
+                        bsDatepicker [maxDate]="maxDate">
+
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small class="text-danger">Must provide name</small>
+                    <small class="text-info">All users have 18 years or older must</small>
+                </div>
+                <div class="form-group"
+                    [ngClass]="{'error': onError(this.formValues.get('text')), 'success': onSuccess(this.formValues.get('text'))}">
+                    <label for="exampleFormControlTextarea1">Say about you something</label>
+                    <textarea class="form-control" rows="3" formControlName="text"></textarea>
+                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-exclamation-circle"></i>
+                    <small class="text-danger">Must provide this field</small>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label form-check-inline" for="gender">Gender: </label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input checked" type="radio" name="gender" id="male" value="male"
+                            formControlName="gender">
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="female"
+                            formControlName="gender">
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="checkbox">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-center justify-content-center">
+                <button type="submit" class="btn btn-primary mr-5" [disabled]="!formValues.valid">Submit</button>
+                <button type="reset" class="btn btn-info">Reset</button>
+            </div>
+        </div>
+    </form>
+</div>

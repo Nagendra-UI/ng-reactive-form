@@ -1,0 +1,18 @@
+<div class="form">
+    <div class="card-body">
+        <h5 class="card-title">Name: {{viewValues.username}}</h5>
+        <h6 class="card-title ">Email: {{viewValues.email}}</h6>
+        <h6 class="card-title ">Date of Birth {{viewValues.dob | date}}</h6>
+        <h6 class="card-title ">Gender: {{viewValues.gender}}</h6>
+        <p class="card-title">Intro: {{viewValues.text}}</p>
+        <div class="row">
+            <div class="col-sm-6">
+                <h5 *ngIf="viewValues.skills.length > 0">Skills</h5>
+                <div class="list-group" *ngFor="let skill of viewValues.skills; let i = index">
+                    <div class="list-group-item list-group-item-success">{{skill.skill}}</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
